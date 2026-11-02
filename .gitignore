@@ -222,3 +222,5 @@ __marimo__/
 
 # Others
 notes.txt
+migrations/
+.vscode/
