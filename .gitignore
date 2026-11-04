@@ -224,3 +224,4 @@ __marimo__/
 notes.txt
 migrations/
 .vscode/
+app/static/svg/

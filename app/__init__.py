@@ -20,10 +20,9 @@ def create_app() -> Flask:
     with app.app_context():
         db.create_all()
 
-    # Definindo uma rota de teste para verificar se a aplicação está funcionando
-    @app.route("/")
-    def index():
-        return "Hello, World!"
+    # Registrando os blueprints das rotas
+    from app.routes.auth import auth_bp
+    app.register_blueprint(auth_bp)
 
     # Retornando a aplicação
     return app
