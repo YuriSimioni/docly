@@ -1,14 +1,32 @@
 # Importando bibliotecas
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 from app.core import extensions
+from app.services.users import UserService
 
 # Criando o blueprint para a rota de autenticação
 auth_bp = Blueprint('auth', __name__)
 
 # Definindo a rota de login
-@auth_bp.route('/')
+@auth_bp.route('/', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        login = request.form.get('login') or ''
+        password = request.form.get('password') or ''
+        
+        user = UserService.authenticate_user(login, password)
+        
+        if user:
+            # Autenticação bem-sucedida
+            return f"Bem-vindo, {user.name}!"
+        else:
+            # Autenticação falhou
+            return render_template('auth/login.html',
+                                   base_page=extensions.default_page_config,
+                                   page_title="Login",
+                                   error_message="Login ou senha inválidos."
+                                   )
+        
     return render_template('auth/login.html',
                            base_page=extensions.default_page_config,
                            page_title="Login"

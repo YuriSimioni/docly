@@ -1,5 +1,6 @@
 # Importando as bibliotecas necessárias
 from flask import Flask
+from app.auth.security import hash_password
 from app.core.config import Config
 from app.core.extensions import db, migrate
 
@@ -16,9 +17,14 @@ def create_app() -> Flask:
     db.init_app(app)
     migrate.init_app(app, db)
     
+    # Importando os modelos do banco de dados
+    from app.models.users import User
+    
     # Inicializando o banco de dados
     with app.app_context():
+
         db.create_all()
+
 
     # Registrando os blueprints das rotas
     from app.routes.auth import auth_bp
