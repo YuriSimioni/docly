@@ -39,3 +39,10 @@ def login():
                            base_page=extensions.default_page_config,
                            page_title="Login"
                            )
+    
+@auth_bp.route('/dashboard', methods=['GET'])
+def dashboard():
+    return render_template('dashboard.html',
+                           base_page=extensions.default_page_config,
+                           page_title="Dashboard"
+                           )
