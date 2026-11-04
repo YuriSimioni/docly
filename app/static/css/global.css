@@ -116,3 +116,135 @@ body {
     background: var(--background-color);
 }
 
+
+
+
+#messages {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+
+    width: min(400px, calc(100% - 32px));
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    pointer-events: none;
+}
+
+#messages .alert {
+    --alert-color: #64748b;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 54px;
+    height: fit-content;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+    color: #334155;
+
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid var(--alert-color);
+    border-radius: 4px;
+
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.07);
+
+    pointer-events: auto;
+
+    animation: alert-enter .2s ease-out;
+
+    & svg {
+        width: 19px;
+        height: 19px;
+        flex-shrink: 0;
+        fill: var(--alert-color);
+    }
+
+    & .alert-message {
+        flex: 1;
+
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #334155;
+        word-break: break-all;
+        text-align: justify;
+        width: 100%;
+    }
+
+    & .alert-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 26px;
+        height: 26px;
+
+        border: none;
+        border-radius: 3px;
+        background: transparent;
+
+        color: #94a3b8;
+        font-size: 19px;
+
+        cursor: pointer;
+        transition: background .15s, color .15s;
+
+        &:hover {
+            background: #f1f5f9;
+            color: #334155;
+        }
+    }
+
+    &.alert-error {
+        --alert-color: #dc5555;
+    }
+
+    &.alert-success {
+        --alert-color: #26845b;
+    }
+
+    &.alert-warning {
+        --alert-color: #c28b32;
+    }
+
+    &.alert-info {
+        --alert-color: #3974a8;
+    }
+}
+
+@keyframes alert-enter {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes alert-exit {
+    to {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+}
+
+@media (max-width: 480px) {
+    #messages {
+        top: 12px;
+        right: 12px;
+        width: calc(100% - 24px);
+    }
+}

@@ -10,6 +10,164 @@
     {% endblock %}
 </head>
 <body>
+    
+    <div id="messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+
+                    {% if category == "error" %}
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24">
+                            <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4h-2V7h2v6Z"/>
+                        </svg>
+
+                    {% elif category == "success" %}
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24">
+                            <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1 14-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10l-6 6Z"/>
+                        </svg>
+
+                    {% elif category == "warning" %}
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24">
+                            <path d="M12 2 1 21h22L12 2Zm1 15h-2v-2h2v2Zm0-4h-2V9h2v4Z"/>
+                        </svg>
+
+                    {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24">
+                            <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/>
+                        </svg>
+                    {% endif %}
+
+                    <span class="alert-message">{{ message }}</span>
+
+                    <button type="button"
+                            class="alert-close"
+                            aria-label="Fechar notificação"
+                            onclick="hide_message(this.closest('.alert'))">
+                        &times;
+                    </button>
+
+                </div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+
     {% block content %}{% endblock %}
+    <script>
+
+
+        
+        function show_message(message, category = "info", duration = 5000) {
+            const validCategories = ["success", "error", "warning", "info"];
+
+            if (!validCategories.includes(category)) {
+                category = "info";
+            }
+
+            // Recupera ou cria o container
+            let container = document.getElementById("messages");
+
+            if (!container) {
+                container = document.createElement("div");
+                container.id = "messages";
+                document.body.appendChild(container);
+            }
+
+            // Ícones das notificações
+            const icons = {
+                error: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4h-2V7h2v6Z",
+
+                success: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1 14-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10l-6 6Z",
+
+                warning: "M12 2 1 21h22L12 2Zm1 15h-2v-2h2v2Zm0-4h-2V9h2v4Z",
+
+                info: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"
+            };
+
+            // Cria a notificação
+            const alert = document.createElement("div");
+            alert.className = `alert alert-${category}`;
+            alert.setAttribute("role", category === "error" ? "alert" : "status");
+
+            // Ícone
+            const svg = document.createElementNS(
+                "http://www.w3.org/2000/svg", "svg"
+            );
+
+            svg.setAttribute("viewBox", "0 0 24 24");
+
+            const path = document.createElementNS(
+                "http://www.w3.org/2000/svg", "path"
+            );
+
+            path.setAttribute("d", icons[category]);
+
+            svg.appendChild(path);
+
+            // Texto
+            const span = document.createElement("span");
+            span.className = "alert-message";
+            span.textContent = message;
+
+            // Botão fechar
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "alert-close";
+            button.setAttribute("aria-label", "Fechar notificação");
+            button.textContent = "×";
+
+            button.addEventListener("click", () => {
+                hide_message(alert);
+            });
+
+            // Monta a notificação
+            alert.append(svg, span, button);
+            container.appendChild(alert);
+
+            // Remoção automática
+            if (duration > 0) {
+                alert.timeout = setTimeout(() => {
+                    hide_message(alert);
+                }, duration);
+            }
+
+            return alert;
+        }
+
+
+        // Remove uma notificação
+        function hide_message(alert) {
+            if (!alert || alert.classList.contains("closing")) return;
+
+            clearTimeout(alert.timeout);
+
+            alert.classList.add("closing");
+
+            setTimeout(() => {
+                alert.remove();
+
+                const container = document.getElementById("messages");
+
+                if (container && !container.querySelector(".alert")) {
+                    container.remove();
+                }
+            }, 200);
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("#messages .alert").forEach((alert) => {
+                setTimeout(() => {
+                    hide_message(alert);
+                }, 5000);
+            });
+        });
+
+
+
+    </script>
 </body>
 </html>

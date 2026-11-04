@@ -1,5 +1,7 @@
 # Importando bibliotecas
-from flask import Blueprint, render_template, request
+
+
+from flask import Blueprint, render_template, request, flash
 
 from app.core import extensions
 from app.services.users import UserService
@@ -18,13 +20,19 @@ def login():
         
         if user:
             # Autenticação bem-sucedida
-            return f"Bem-vindo, {user.name}!"
+            flash("Login realizado com sucesso.", "success")
+            return render_template('dashboard.html',
+                                   base_page=extensions.default_page_config,
+                                      page_title="Login",
+                                      message="Login realizado com sucesso."
+                                      )
         else:
+            flash("Login ou senha inválidos.", "error")
             # Autenticação falhou
             return render_template('auth/login.html',
                                    base_page=extensions.default_page_config,
                                    page_title="Login",
-                                   error_message="Login ou senha inválidos."
+                                   message="Login ou senha inválidos."
                                    )
         
     return render_template('auth/login.html',

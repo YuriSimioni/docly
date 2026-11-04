@@ -9,6 +9,7 @@ def create_app() -> Flask:
 
     # Criando a instância da aplicação Flask
     app: Flask = Flask(__name__)
+    app.secret_key = Config.SECRET_KEY
 
     # Configurando a aplicação Flask com as variáveis de ambiente
     app.config.from_object(Config)
@@ -22,7 +23,6 @@ def create_app() -> Flask:
     
     # Inicializando o banco de dados
     with app.app_context():
-
         db.create_all()
 
 
