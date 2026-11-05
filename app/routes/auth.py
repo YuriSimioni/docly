@@ -44,5 +44,6 @@ def login():
 def dashboard():
     return render_template('dashboard.html',
                            base_page=extensions.default_page_config,
-                           page_title="Dashboard"
+                           page_title="Dashboard",
+                           sidebar_selected="dashboard"
                            )
