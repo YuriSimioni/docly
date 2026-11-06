@@ -4,7 +4,7 @@ menu#menu-sidebar {
     top: 0;
     left: 0;
     position: fixed;
-    background: var(--color-surface);
+    background: var(--color-secondary);
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@ menu#menu-sidebar {
     & a#title-sidebar {
         font-size: 1.8rem;
         font-weight: bold;
-        color: var(--color-primary);
+        color: var(--color-surface);
         text-decoration: none;
         margin-bottom: 20px;
         display: flex;
@@ -23,7 +23,7 @@ menu#menu-sidebar {
         gap: 10px;
         padding-bottom: 20px;
         width: 100%;
-        border-bottom: 1px solid var(--color-border);
+        border-bottom: 1px solid var(--color-secondary-hover);
         & svg {
             width: 32px;
             height: 32px;
@@ -39,7 +39,7 @@ menu#menu-sidebar {
         gap: 10px;
         & a {
             text-decoration: none;
-            color: var(--color-text);
+            color: var(--color-text-muted);
             width: 100%;
             font-size: 1rem;
             padding: 10px 20px;
@@ -50,19 +50,23 @@ menu#menu-sidebar {
             gap: 10px;
             border-left: 3px solid transparent;
             &.active {
-                color: var(--color-primary);
+                color: var(--color-text-inverse);
                 & svg {
-                    fill: var(--color-primary);
+                    fill: var(--color-text-inverse);
                 }
             }
             & svg {
                 width: 20px;
                 height: 20px;
-                fill: var(--color-text);
+                fill: var(--color-text-muted);
             }
             &:hover {
-                border-left-color: var(--color-primary);
+                border-left-color: var(--color-text-inverse);
                 margin-left: 5px;
+                color: var(--color-text-inverse);
+                & svg {
+                    fill: var(--color-text-inverse);
+                }
             }
         }
     }
@@ -72,7 +76,7 @@ menu#menu-sidebar {
         align-items: center;
         justify-content: space-between;
         padding-top: 20px;
-        border-top: 1px solid var(--color-border);
+        border-top: 1px solid var(--color-secondary-hover);
         & #user-info {
             display: flex;
             align-items: center;
@@ -91,7 +95,7 @@ menu#menu-sidebar {
             }
             & #user-name {
                 font-size: 1rem;
-                color: var(--color-text);
+                color: var(--color-text-inverse);
             }
         }
         & a#logout {

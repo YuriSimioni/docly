@@ -176,7 +176,6 @@ body {
 
     & .alert-message {
         flex: 1;
-
         font-family: inherit;
         font-size: 13px;
         font-weight: 500;
@@ -253,4 +252,13 @@ body {
         right: 12px;
         width: calc(100% - 24px);
     }
+}
+
+
+#content {
+    width: 85vw;
+    height: 100vh;
+    right: 0;
+    top: 0;
+    position: fixed;
 }
